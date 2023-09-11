@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.wildfly.common.annotation.NotNull;
 
+import dto.TaskDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,10 +31,8 @@ public class Task {
 
   private String description;
 
-  private Boolean done;
+  private Status status;
 
-  // @Temporal(TemporalType.TIMESTAMP)
-  // @Column(name = "created_at")
   @Column(nullable = false, updatable = false)
   @CreationTimestamp
   private LocalDateTime createdAt;
@@ -42,11 +41,28 @@ public class Task {
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
+  public Task(TaskDTO taskDTO) {
+    this.title = taskDTO.getTitle();
+    this.description = taskDTO.getDescription();
+    this.status = taskDTO.getStatus();
+    this.createdAt = taskDTO.getCreatedAt();
+    this.updatedAt = taskDTO.getUpdatedAt();
+  }
+
   public void update(Task task) {
     this.setTitle(task.getTitle());
     this.setDescription(task.getDescription());
-    this.setDone(task.getDone());
+    this.setStatus(task.getStatus());
     this.setUpdatedAt(java.time.LocalDateTime.now());
+  }
+
+  public void changeStatus(Status status) {
+    if (status == Status.CONCLUIDA) {
+      this.status = Status.PENDENTE;
+    } else {
+      this.status = Status.CONCLUIDA;
+    }
+    this.updatedAt = java.time.LocalDateTime.now();
   }
 
   public Long getId() {
@@ -73,12 +89,12 @@ public class Task {
     this.description = description;
   }
 
-  public Boolean getDone() {
-    return done;
+  public Status getStatus() {
+    return status;
   }
 
-  public void setDone(Boolean done) {
-    this.done = done;
+  public void setStatus(Status status) {
+    this.status = status;
   }
 
   public LocalDateTime getCreatedAt() {

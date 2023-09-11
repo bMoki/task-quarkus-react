@@ -3,10 +3,11 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.Task;
+import dto.TaskDTO;
 import errors.ResourceNotFound;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
@@ -25,7 +26,7 @@ public class TaskController {
 
   @GET
   public Response getAllTasks() {
-    List<Task> tasks = new ArrayList<>();
+    List<TaskDTO> tasks = new ArrayList<>();
 
     try {
       tasks = taskService.findAllTasks();
@@ -38,9 +39,9 @@ public class TaskController {
 
   @POST
   @Transactional
-  public Response addTask(Task task) {
+  public Response addTask(@Valid TaskDTO taskDTO) {
     try {
-      taskService.addTask(task);
+      taskService.addTask(taskDTO);
     } catch (Exception e) {
       e.printStackTrace();
       return Response.serverError().build();
@@ -66,7 +67,7 @@ public class TaskController {
   @PUT
   @Path("/{id}")
   @Transactional
-  public Response updateTask(@PathParam("id") Long id, Task task) {
+  public Response updateTask(@PathParam("id") Long id, @Valid TaskDTO task) {
     try {
       taskService.updateTask(id, task);
     } catch (Exception e) {
