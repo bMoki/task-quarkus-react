@@ -20,7 +20,6 @@ public class TaskService {
   }
 
   public void addTask(Task task) {
-    task.setCreatedAt(java.time.LocalDateTime.now());
     taskRepository.persist(task);
   }
 
@@ -35,11 +34,6 @@ public class TaskService {
 
     taskRepository.persist(taskToUpdate);
   }
-
-  // public Task findById(Long id) {
-  // Optional<Task> optionalTask = taskRepository.findByIdOptional(id);
-  // return optionalTask.orElse(null);
-  // }
 
   public void deleteTask(Long id) throws ResourceNotFound {
     Task taskToDelete = taskRepository.findById(id);

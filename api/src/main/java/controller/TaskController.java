@@ -48,16 +48,6 @@ public class TaskController {
     return Response.noContent().build();
   }
 
-  // @GET
-  // @Path("/{id}")
-  // public Response getTask(@PathParam("id") Long id) {
-  // Task task = taskService.findById(id);
-  // if (task == null) {
-  // throw new WebApplicationException(404);
-  // }
-  // return Response.ok(task).build();
-  // }
-
   @PATCH
   @Path("/status/{id}")
   @Transactional

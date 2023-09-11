@@ -2,6 +2,7 @@ package entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.wildfly.common.annotation.NotNull;
 
 import jakarta.persistence.Column;
@@ -31,8 +32,10 @@ public class Task {
 
   private Boolean done;
 
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "created_at")
+  // @Temporal(TemporalType.TIMESTAMP)
+  // @Column(name = "created_at")
+  @Column(nullable = false, updatable = false)
+  @CreationTimestamp
   private LocalDateTime createdAt;
 
   @Temporal(TemporalType.TIMESTAMP)
