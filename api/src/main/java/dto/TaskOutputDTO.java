@@ -4,33 +4,30 @@ import java.time.LocalDateTime;
 
 import entity.Status;
 import entity.Task;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
-public class TaskDTO {
-
-  @NotNull(message = "Title must be informed")
-  @NotBlank(message = "Title can't be blank")
+public class TaskOutputDTO {
+  private Long id;
   private String title;
-
-  @NotNull(message = "Description must be informed")
-  @NotBlank(message = "Description can't be blank")
   private String description;
-
-  @NotNull(message = "Status must be informed")
   private Status status;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
-  public TaskDTO() {
-  }
-
-  public TaskDTO(Task task) {
+  public TaskOutputDTO(Task task) {
+    this.id = task.getId();
     this.title = task.getTitle();
     this.description = task.getDescription();
     this.status = task.getStatus();
     this.createdAt = task.getCreatedAt();
     this.updatedAt = task.getUpdatedAt();
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getTitle() {

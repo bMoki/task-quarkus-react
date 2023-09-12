@@ -2,7 +2,8 @@ package service;
 
 import java.util.List;
 
-import dto.TaskDTO;
+import dto.TaskInputDTO;
+import dto.TaskOutputDTO;
 import entity.Task;
 import errors.ResourceNotFound;
 import io.quarkus.panache.common.Sort;
@@ -17,14 +18,14 @@ public class TaskService {
   @Inject
   TaskRepository taskRepository;
 
-  public List<TaskDTO> findAllTasks() {
+  public List<TaskOutputDTO> findAllTasks() {
     List<Task> tasks = taskRepository.findAll(Sort.by("createdAt", Direction.Descending)).list();
-    List<TaskDTO> taskDTOs = tasks.stream().map(task -> new TaskDTO(task)).toList();
-    return taskDTOs;
+    List<TaskOutputDTO> taskOutputDTOs = tasks.stream().map(task -> new TaskOutputDTO(task)).toList();
+    return taskOutputDTOs;
   }
 
-  public void addTask(TaskDTO taskDTO) {
-    Task task = new Task(taskDTO);
+  public void addTask(TaskInputDTO taskInputDTO) {
+    Task task = new Task(taskInputDTO);
     taskRepository.persist(task);
   }
 
@@ -47,9 +48,9 @@ public class TaskService {
     taskRepository.deleteById(id);
   }
 
-  public void updateTask(Long id, TaskDTO taskDTO) throws ResourceNotFound {
+  public void updateTask(Long id, TaskInputDTO taskInputDTO) throws ResourceNotFound {
     Task taskToUpdate = taskRepository.findById(id);
-    Task task = new Task(taskDTO);
+    Task task = new Task(taskInputDTO);
 
     if (taskToUpdate == null) {
       throw new ResourceNotFound();

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.wildfly.common.annotation.NotNull;
 
-import dto.TaskDTO;
+import dto.TaskInputDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,12 +41,10 @@ public class Task {
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
 
-  public Task(TaskDTO taskDTO) {
+  public Task(TaskInputDTO taskDTO) {
     this.title = taskDTO.getTitle();
     this.description = taskDTO.getDescription();
     this.status = taskDTO.getStatus();
-    this.createdAt = taskDTO.getCreatedAt();
-    this.updatedAt = taskDTO.getUpdatedAt();
   }
 
   public void update(Task task) {
