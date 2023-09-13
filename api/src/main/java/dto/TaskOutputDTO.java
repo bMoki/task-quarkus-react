@@ -11,7 +11,7 @@ public class TaskOutputDTO {
   private String description;
   private Status status;
   private LocalDateTime createdAt;
-  private LocalDateTime updatedAt;
+  private LocalDateTime concludedAt;
 
   public TaskOutputDTO(Task task) {
     this.id = task.getId();
@@ -19,7 +19,7 @@ public class TaskOutputDTO {
     this.description = task.getDescription();
     this.status = task.getStatus();
     this.createdAt = task.getCreatedAt();
-    this.updatedAt = task.getUpdatedAt();
+    this.concludedAt = task.getConcludedAt();
   }
 
   public Long getId() {
@@ -62,12 +62,12 @@ public class TaskOutputDTO {
     this.createdAt = createdAt;
   }
 
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
+  public LocalDateTime getConcludedAt() {
+    return concludedAt;
   }
 
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setConcludedAt(LocalDateTime concludedAt) {
+    this.concludedAt = concludedAt;
   }
 
 }

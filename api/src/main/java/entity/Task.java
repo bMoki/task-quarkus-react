@@ -38,8 +38,8 @@ public class Task {
   private LocalDateTime createdAt;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
+  @Column(name = "concluded_at")
+  private LocalDateTime concludedAt;
 
   public Task(TaskInputDTO taskDTO) {
     this.title = taskDTO.getTitle();
@@ -48,19 +48,24 @@ public class Task {
   }
 
   public void update(Task task) {
-    this.setTitle(task.getTitle());
-    this.setDescription(task.getDescription());
-    this.setStatus(task.getStatus());
-    this.setUpdatedAt(java.time.LocalDateTime.now());
+    this.title = task.getTitle();
+    this.description = task.getDescription();
+    if (this.status != Status.CONCLUIDA && task.getStatus() == Status.CONCLUIDA) {
+      this.concludedAt = java.time.LocalDateTime.now();
+    } else if (this.status != Status.PENDENTE && task.getStatus() == Status.PENDENTE) {
+      this.concludedAt = null;
+    }
+    this.status = task.getStatus();
   }
 
   public void changeStatus(Status status) {
     if (status == Status.CONCLUIDA) {
       this.status = Status.PENDENTE;
+      this.concludedAt = null;
     } else {
       this.status = Status.CONCLUIDA;
+      this.concludedAt = java.time.LocalDateTime.now();
     }
-    this.updatedAt = java.time.LocalDateTime.now();
   }
 
   public Long getId() {
@@ -103,12 +108,12 @@ public class Task {
     this.createdAt = createdAt;
   }
 
-  public LocalDateTime getUpdatedAt() {
-    return updatedAt;
+  public LocalDateTime getConcludedAt() {
+    return concludedAt;
   }
 
-  public void setUpdatedAt(LocalDateTime updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setConcludedAt(LocalDateTime concludedAt) {
+    this.concludedAt = concludedAt;
   }
 
 }
