@@ -18,10 +18,21 @@ public class TaskService {
   @Inject
   TaskRepository taskRepository;
 
-  public List<TaskOutputDTO> findAllTasks() {
+  public List<TaskOutputDTO> findAll() {
     List<Task> tasks = taskRepository.findAll(Sort.by("createdAt", Direction.Descending)).list();
     List<TaskOutputDTO> taskOutputDTOs = tasks.stream().map(task -> new TaskOutputDTO(task)).toList();
     return taskOutputDTOs;
+  }
+
+  public TaskOutputDTO findById(Long id) throws ResourceNotFound {
+    Task task = taskRepository.findById(id);
+
+    if (task == null) {
+      throw new ResourceNotFound();
+    }
+
+    TaskOutputDTO taskOutputDTO = new TaskOutputDTO(task);
+    return taskOutputDTO;
   }
 
   public void addTask(TaskInputDTO taskInputDTO) {

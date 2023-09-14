@@ -30,12 +30,26 @@ public class TaskController {
     List<TaskOutputDTO> tasks = new ArrayList<>();
 
     try {
-      tasks = taskService.findAllTasks();
+      tasks = taskService.findAll();
     } catch (Exception e) {
-      e.printStackTrace();
       return Response.serverError().build();
     }
     return Response.ok(tasks).build();
+  }
+
+  @GET
+  @Path("/{id}")
+  public Response findTaskById(@PathParam("id") Long id) {
+    TaskOutputDTO task = new TaskOutputDTO();
+    try {
+      task = taskService.findById(id);
+    } catch (Exception e) {
+      if (e instanceof ResourceNotFound) {
+        return Response.status(Response.Status.NOT_FOUND).build();
+      }
+      return Response.serverError().build();
+    }
+    return Response.ok(task).build();
   }
 
   @POST
@@ -44,7 +58,6 @@ public class TaskController {
     try {
       taskService.addTask(taskDTO);
     } catch (Exception e) {
-      e.printStackTrace();
       return Response.serverError().build();
     }
     return Response.noContent().build();

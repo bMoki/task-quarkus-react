@@ -22,6 +22,9 @@ public class TaskOutputDTO {
     this.concludedAt = task.getConcludedAt();
   }
 
+  public TaskOutputDTO() {
+  }
+
   public Long getId() {
     return id;
   }
