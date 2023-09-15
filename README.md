@@ -21,7 +21,7 @@ Estas instruções ajudarão você a configurar e executar a API Quarkus e o fro
 Antes de começar, certifique-se de que os seguintes pré-requisitos estejam instalados:
 
 - [Java Development Kit (JDK) 17](https://adoptopenjdk.net/)
-- [Apache Maven](https://maven.apache.org/download.cgi) (para construir a API Quarkus)
+- [Apache Maven 3.8.x](https://maven.apache.org/download.cgi) (para construir a API Quarkus)
 - [Node.js](https://nodejs.org/) (v14 ou superior recomendado)
 - [npm](https://www.npmjs.com/) ou [Yarn](https://yarnpkg.com/) (para executar o frontend React.js)
 
@@ -52,7 +52,7 @@ Antes de começar, certifique-se de que os seguintes pré-requisitos estejam ins
 Para iniciar a API REST Quarkus, execute os seguintes comandos a partir do diretório raiz do repositório:
 
 ```sh
-cd api
+cd ../api
 mvn quarkus:dev
 ```
 
